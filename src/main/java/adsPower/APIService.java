@@ -2,14 +2,13 @@ package adsPower;
 
 import adsPower.exceptions.HttpException;
 import adsPower.exceptions.OperationFailedException;
-import adsPower.responseParser.Response;
-import adsPower.responseParser.ResponseParser;
-import httpLib.URL;
+import utils.URL;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class APIService {
     private final HttpClient client;
@@ -66,11 +65,27 @@ public class APIService {
         return adsPowerResponse;
     }
 
-    public Response getProfiles(Long groupId) throws IOException,
+    public Response getProfilesByUserIds(List<String> userIds) throws IOException, InterruptedException {
+        StringBuilder value = new StringBuilder();
+        boolean first = true;
+        for (String userId : userIds) {
+            if (!first) {
+                value.append(",");
+            }
+            value.append(userId);
+            first = false;
+        }
+        return getProfiles("user_id", value.toString());
+    }
+
+    public Response getProfilesByGroupId(Long groupId) throws IOException, InterruptedException {
+        return getProfiles("group_id", String.valueOf(groupId));
+    }
+    private Response getProfiles(String parameter, String value) throws IOException,
             InterruptedException {
         URL url = new URL(apiUrl)
                 .add(getProfilesPath)
-                .addParameter("group_id", String.valueOf(groupId))
+                .addParameter(parameter, value)
                 .addParameter("page_size", "1000"); //max page size for profiles (page size = number of profiles)
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url.getValue()))

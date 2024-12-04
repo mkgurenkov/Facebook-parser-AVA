@@ -1,12 +1,13 @@
-package adsPower.responseConverter;
+package adsPower;
 
 import adsPower.exceptions.ConvertingException;
-import adsPower.responseParser.Response;
+import adsPower.data.Group;
+import adsPower.data.Profile;
+import adsPower.data.SeleniumData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ResponseConverter {
     public static List<Group> toGroups(Response response) {
@@ -26,7 +27,7 @@ public class ResponseConverter {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Profile> profiles = new ArrayList<>();
         try {
-            List<Object> list = (List<Object>) response.getData().get("list");;
+            List<Object> list = (List<Object>) response.getData().get("list");
             for (Object v : list) {
                 profiles.add(objectMapper.convertValue(v, Profile.class));
             }
@@ -34,6 +35,16 @@ public class ResponseConverter {
             throw new ConvertingException("Failed to convert the response");
         }
         return profiles;
+    }
+    public static SeleniumData toSeleniumData(Response response) {
+        SeleniumData seleniumData = new SeleniumData();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            seleniumData = objectMapper.convertValue(response.getData(), SeleniumData.class);
+        } catch (IllegalArgumentException e) {
+            throw new ConvertingException("Failed to convert the response");
+        }
+        return seleniumData;
     }
 
 }

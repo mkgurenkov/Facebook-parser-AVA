@@ -1,4 +1,4 @@
-package adsPower.responseParser;
+package adsPower;
 
 
 import lombok.Data;

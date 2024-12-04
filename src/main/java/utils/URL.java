@@ -1,4 +1,4 @@
-package httpLib;
+package utils;
 
 public class URL {
     private StringBuilder value;

@@ -1,4 +1,4 @@
-package sunBrowser;
+package sunBrowser.data;
 
 import lombok.Data;
 

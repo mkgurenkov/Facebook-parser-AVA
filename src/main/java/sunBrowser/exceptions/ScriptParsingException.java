@@ -1,6 +1,6 @@
 package sunBrowser.exceptions;
 
-public class ScriptParsingException extends RuntimeException {
+public class ScriptParsingException extends SunBrowserException {
     public ScriptParsingException() {
         super();
     }

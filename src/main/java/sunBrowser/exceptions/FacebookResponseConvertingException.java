@@ -1,6 +1,6 @@
 package sunBrowser.exceptions;
 
-public class FacebookResponseConvertingException extends RuntimeException {
+public class FacebookResponseConvertingException extends SunBrowserException {
     public FacebookResponseConvertingException() {
         super();
     }

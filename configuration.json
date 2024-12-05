@@ -1,15 +1,17 @@
 {
-  "reports_folder": "C:\\Users\\enwer\\Desktop\\reports\\",
+  "reports_folder": "C:\\Users\\enwer\\Desktop\\reports",
   "search": {
     "mode": "ids",
     "group": "Share-1116-honpcy-LzAYRY",
-    "ids": ["kpvoqqs", "kjbcd6j", "kp19h5h"]
+    "ids": ["kpvoqqs"]
   },
   "report": {
     "date": {
       "mode": "time_range",
       "date_preset": "last_7d",
       "time_range": {"since":"2024-11-01", "until": "2024-11-27"}
-    }
-  }
+    },
+    "type" : "old"
+  },
+  "console_input" : ["search.ids"]
 }

@@ -1,6 +1,6 @@
 package sunBrowser.exceptions;
 
-public class AjaxException extends RuntimeException {
+public class AjaxException extends SunBrowserException {
     public AjaxException() {
         super();
     }

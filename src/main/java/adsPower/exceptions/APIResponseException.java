@@ -1,6 +1,6 @@
 package adsPower.exceptions;
 
-public class APIResponseException extends RuntimeException {
+public class APIResponseException extends AdsPowerException {
     public APIResponseException() {
         super();
     }

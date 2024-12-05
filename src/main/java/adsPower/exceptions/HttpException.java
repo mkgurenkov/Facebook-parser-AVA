@@ -1,6 +1,6 @@
 package adsPower.exceptions;
 
-public class HttpException extends RuntimeException {
+public class HttpException extends AdsPowerException {
     public HttpException() {
         super();
     }

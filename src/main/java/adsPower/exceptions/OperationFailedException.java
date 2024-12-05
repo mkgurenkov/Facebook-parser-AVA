@@ -1,6 +1,6 @@
 package adsPower.exceptions;
 
-public class OperationFailedException extends RuntimeException {
+public class OperationFailedException extends AdsPowerException {
     public OperationFailedException() {
         super();
     }

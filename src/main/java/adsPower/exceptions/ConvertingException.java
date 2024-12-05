@@ -1,6 +1,6 @@
 package adsPower.exceptions;
 
-public class ConvertingException extends RuntimeException {
+public class ConvertingException extends AdsPowerException {
     public ConvertingException() {
         super();
     }

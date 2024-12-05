@@ -1,6 +1,6 @@
 package sunBrowser.exceptions;
 
-public class FacebookAPIResponseException extends RuntimeException {
+public class FacebookAPIResponseException extends SunBrowserException {
     public FacebookAPIResponseException() {
         super();
     }

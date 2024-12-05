@@ -1,5 +1,6 @@
-package sunBrowser;
+package sunBrowser.utils;
 
+import sunBrowser.data.FacebookResponse;
 import sunBrowser.exceptions.FacebookAPIResponseException;
 import java.util.Map;
 import java.util.Objects;
@@ -14,7 +15,7 @@ public class FacebookResponseParser {
             facebookResponse.setWwwRequestId((String) Objects.requireNonNull(jsonFacebookResponse.get("__www_request_id__")));
             return facebookResponse;
         } catch (NullPointerException | ClassCastException e) {
-            throw new FacebookAPIResponseException("Unable to recognize API response: " + e.getMessage());
+            throw new FacebookAPIResponseException("Unable to recognize API response: " + Objects.requireNonNullElse(e.getMessage(), "no system message"));
         }
     }
 }

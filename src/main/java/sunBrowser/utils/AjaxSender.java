@@ -1,7 +1,8 @@
-package sunBrowser;
+package sunBrowser.utils;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import sunBrowser.data.FacebookResponse;
 import sunBrowser.exceptions.AjaxException;
 import sunBrowser.exceptions.ScriptParsingException;
 
@@ -10,13 +11,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.Objects;
 
-class AjaxSender {
+public class AjaxSender {
     private final WebDriver driver;
-    AjaxSender(WebDriver driver) {
+    public AjaxSender(WebDriver driver) {
         this.driver = driver;
     }
-    FacebookResponse send(String url, String method, String body) {
+    public FacebookResponse send(String url, String method, String body) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
         Map<String, Object> response = (Map<String, Object>) jsExecutor.executeAsyncScript(parseScript("ajax.js"), url, method, body);
         if (!((boolean) response.get("success"))) {
@@ -27,7 +29,7 @@ class AjaxSender {
         }
     }
 
-    FacebookResponse send(String url, String method) {
+    public FacebookResponse send(String url, String method) {
         return send(url, method, null);
     }
     private String parseScript(String path) {
@@ -41,7 +43,7 @@ class AjaxSender {
             }
             return script.toString();
         } catch (IOException e) {
-            throw new ScriptParsingException("Failed to parse " + path + ": " + e.getMessage());
+            throw new ScriptParsingException("Failed to parse " + path + ": " + Objects.requireNonNullElse(e.getMessage(), "no system message"));
         }
     }
 }

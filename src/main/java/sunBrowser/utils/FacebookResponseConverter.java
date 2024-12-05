@@ -1,7 +1,8 @@
-package sunBrowser;
+package sunBrowser.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import sunBrowser.data.Account;
+import sunBrowser.data.FacebookResponse;
 import sunBrowser.data.WebUrl;
 import sunBrowser.exceptions.FacebookResponseConvertingException;
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-class FacebookResponseConverter {
-    static List<Account> toAccounts(FacebookResponse facebookResponse) {
+public class FacebookResponseConverter {
+    public static List<Account> toAccounts(FacebookResponse facebookResponse) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Account> accounts = new ArrayList<>();
@@ -20,11 +21,11 @@ class FacebookResponseConverter {
             }
             return accounts;
         } catch (ClassCastException | IllegalArgumentException e) {
-            throw new FacebookResponseConvertingException("Unable to convert facebook response to List<Account>: " + e.getMessage());
+            throw new FacebookResponseConvertingException("Unable to convert facebook response to List<Account>: " + Objects.requireNonNullElse(e.getMessage(), "no system message"));
         }
     }
 
-    static List<WebUrl> toWebUrls(FacebookResponse facebookResponse) {
+    public static List<WebUrl> toWebUrls(FacebookResponse facebookResponse) {
         try {
             List<WebUrl> webUrls = new ArrayList<>();
             List<Object> data = (List<Object>) facebookResponse.getData();
@@ -43,7 +44,7 @@ class FacebookResponseConverter {
             }
             return webUrls;
         } catch (ClassCastException | NullPointerException e) {
-            throw new FacebookResponseConvertingException("Unable to convert facebook response to List<WebUrl>: " + e.getMessage());
+            throw new FacebookResponseConvertingException("Unable to convert facebook response to List<WebUrl>: " + Objects.requireNonNullElse(e.getMessage(), "no system message"));
         }
     }
 

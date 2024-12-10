@@ -5,16 +5,15 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import sunBrowser.exceptions.AccessFailureException;
-import sunBrowser.exceptions.SunBrowserException;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.Set;
 
 public class FacebookAccessManager {
-    private JavascriptExecutor jsExecutor;
-    private WebDriver driver;
-    private Profile profile;
+    private final JavascriptExecutor jsExecutor;
+    private final WebDriver driver;
+    private final Profile profile;
     private String accessToken;
     private LocalTime accessTokenExpiresAt;
 
@@ -74,15 +73,12 @@ public class FacebookAccessManager {
             WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             driver.get("https://facebook.com/login");
-            waitPage.until(webDriver -> (Boolean) jsExecutor.executeScript("return document.readyState").equals("complete"));
+            waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
 
             if (!driver.findElements(By.id("loginbutton")).isEmpty()) { //login page 1
-                WebElement passwordInput = driver.findElement(By.id("pass"));
-                try {
-                    new WebDriverWait(driver, Duration.ofSeconds(4)).until(ExpectedConditions.attributeToBeNotEmpty(passwordInput, "value"));
-                } catch (TimeoutException e) {
-                    passwordInput.sendKeys(profile.getPassword());
-                }
+                driver.findElement(By.id("pass")).sendKeys("0");
+                driver.findElement(By.id("pass")).clear();
+                driver.findElement(By.id("pass")).sendKeys(profile.getPassword());
                 driver.findElement(By.id("loginbutton")).click();
             } else if (!driver.findElements(By.xpath("//*[text()=\"Continue\"]")).isEmpty()) { //login page 2
                 driver.findElement(By.xpath("//*[text()=\"Continue\"]")).click();
@@ -100,19 +96,19 @@ public class FacebookAccessManager {
                 driver.switchTo().newWindow(WindowType.TAB);
 
                 driver.get("https://start.adspower.net");
-                waitPage.until(webDriver -> (Boolean) jsExecutor.executeScript("return document.readyState").equals("complete"));
+                waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
 
                 String code = driver.findElement(By.xpath("//*[text()=\"2FA Code\"]/following-sibling::div")).getText().split("\\n")[0];
                 driver.switchTo().window(currentWindowHandle);
 
-                waitPage.until(webDriver -> (Boolean) jsExecutor.executeScript("return document.readyState").equals("complete"));
+                waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
                 driver.findElement(By.xpath("//input")).sendKeys(code);
 
-                waitPage.until(webDriver -> (Boolean) jsExecutor.executeScript("return document.readyState").equals("complete"));
+                waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
                 driver.findElement(By.xpath("//*[text()=\"Trust this device\"]")).click();
             }
 
-            waitPage.until(webDriver -> (Boolean) jsExecutor.executeScript("return document.readyState").equals("complete"));
+            waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
             if (driver.getCurrentUrl().contains("/loginpage") || driver.getCurrentUrl().contains("/login/")) {
                 throw new AccessFailureException("Failed to log in");
             } else {

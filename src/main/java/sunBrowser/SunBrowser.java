@@ -2,9 +2,7 @@ package sunBrowser;
 
 import adsPower.data.Profile;
 import application.configuration.Configuration;
-import lombok.Setter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.remote.tracing.SpanWrappedRoutable;
 import sunBrowser.data.Account;
 import sunBrowser.data.FacebookResponse;
 import sunBrowser.data.Report;
@@ -84,8 +82,7 @@ public class SunBrowser {
             List<WebUrl> webUrls = getWebUrls(account, new ArrayList<>(adIds));
 
 //            System.out.println(RED + "debug: webUrls.size == adIds.size (must be true) :" + (webUrls.size() == adIds.size()) + RESET);
-            Report report = Reports.formReportNew(data, webUrls, account);
-            return report;
+            return Reports.formReportNew(data, webUrls, account);
         } catch (WebDriverException | AjaxException | FacebookAPIResponseException | FacebookResponseConvertingException | ScriptParsingException e) {
             throw new SunBrowserException("Failed to generate report for the account " + account.getAccountId() + ": " + Objects.requireNonNullElse(e.getMessage(), "no system message"));
         }
@@ -112,8 +109,7 @@ public class SunBrowser {
             FacebookResponse response = ajaxSender.send(url.getValue(), "GET");
             List<Object> data = (List<Object>) response.getData();
 
-            Report report = Reports.formReportOld(data, account);
-            return report;
+            return Reports.formReportOld(data, account);
         } catch (WebDriverException | AjaxException | FacebookAPIResponseException | FacebookResponseConvertingException | ScriptParsingException e) {
             throw new SunBrowserException("Failed to generate report for the account " + account.getAccountId() + ": " + Objects.requireNonNullElse(e.getMessage(), "no system message"));
         }
@@ -138,7 +134,6 @@ public class SunBrowser {
 
         AjaxSender ajaxSender = new AjaxSender(driver);
         FacebookResponse response = ajaxSender.send(url.getValue(), "GET");
-        List<WebUrl> webUrls = FacebookResponseConverter.toWebUrls(response);
-        return webUrls;
+        return FacebookResponseConverter.toWebUrls(response);
     }
 }

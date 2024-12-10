@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.SortedMap;
 
 
 public class Configuration {
@@ -66,7 +65,10 @@ public class Configuration {
                     break;
                 case "search.ids":
                     System.out.print("Enter ids (ex: kp19h5h kpvoqqs kjbcd6j): ");
-                    search.ids = List.of(scanner.nextLine().strip().split(" "));
+                    String line = scanner.nextLine().strip();
+                    if (!line.isBlank()) {
+                        search.ids = List.of(line.split(" "));
+                    }
                     break;
                 case "report.type":
                     System.out.print("Enter report type: ");

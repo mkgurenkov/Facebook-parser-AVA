@@ -21,7 +21,7 @@ public class APIService {
 
     public APIService(boolean throwExceptionIfOperationFailed) {
         this.throwExceptionIfOperationFailed = throwExceptionIfOperationFailed;
-        this.client = HttpClient.newHttpClient();;
+        this.client = HttpClient.newHttpClient();
     }
     public Response openProfile(String profileId) throws IOException,
             InterruptedException {
@@ -66,6 +66,9 @@ public class APIService {
     }
 
     public Response getProfilesByUserIds(List<String> userIds) throws IOException, InterruptedException {
+        if (userIds == null) {
+            return getProfiles("user_id", "-1");
+        }
         StringBuilder value = new StringBuilder();
         boolean first = true;
         for (String userId : userIds) {

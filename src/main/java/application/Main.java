@@ -69,8 +69,8 @@ public class Main {
                 System.out.println();
                 System.out.println("Opening profile " + profile.getUserId() + "...");
                 SeleniumData seleniumData = ResponseConverter.toSeleniumData(adsPower.openProfile(profile.getUserId()));
+                SunBrowser sunBrowser = SunBrowserConnector.connect(seleniumData.getDebugPort(), seleniumData.getPathToWebDriver(), profile);
                 try {
-                    SunBrowser sunBrowser = SunBrowserConnector.connect(seleniumData.getDebugPort(), seleniumData.getPathToWebDriver(), profile);
                     List<Account> accounts = sunBrowser.getAccounts();
                     List<Report> profileReports = new ArrayList<>();
                     for (Account account : accounts) {
@@ -103,6 +103,7 @@ public class Main {
                 } finally {
                     System.out.println("Closing profile " + profile.getUserId());
                     adsPower.closeProfile(profile.getUserId());
+                    sunBrowser.close();
                 }
             } catch (AdsPowerException | SunBrowserException e) {
                 System.out.println(RED + e.getMessage() + RESET);

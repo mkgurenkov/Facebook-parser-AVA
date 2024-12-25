@@ -36,7 +36,7 @@ public class SunBrowser {
                     .add(getAccountsPath)
                     .addParameter("access_token", accessManager.getAccessToken())
                     .addParameter("limit", "2000")
-                    .addParameter("fields", "timezone_name,currency,account_id");
+                    .addParameter("fields", "timezone_name,currency,account_id,account_status,adspaymentcycle");
             AjaxSender ajaxSender = new AjaxSender(driver);
             FacebookResponse response = ajaxSender.send(url.getValue(), "GET");
             return FacebookResponseConverter.toAccounts(response);
@@ -135,5 +135,8 @@ public class SunBrowser {
         AjaxSender ajaxSender = new AjaxSender(driver);
         FacebookResponse response = ajaxSender.send(url.getValue(), "GET");
         return FacebookResponseConverter.toWebUrls(response);
+    }
+    public void close() {
+        driver.quit();
     }
 }

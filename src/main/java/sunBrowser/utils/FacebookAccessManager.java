@@ -103,7 +103,9 @@ public class FacebookAccessManager {
 
                 waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
                 driver.findElement(By.xpath("//input")).sendKeys(code);
-
+                if (!driver.findElements(By.xpath("//*[text()=\"Continue\"]")).isEmpty()) {
+                    driver.findElement(By.xpath("//*[text()=\"Continue\"]")).click();
+                }
                 waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
                 driver.findElement(By.xpath("//*[text()=\"Trust this device\"]")).click();
             }

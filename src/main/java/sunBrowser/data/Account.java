@@ -13,4 +13,7 @@ public class Account {
     private String timezoneName;
     @JsonProperty("currency")
     private String currency;
+    @JsonProperty("account_status")
+    private long accountStatus;
+    private Long threshold;
 }

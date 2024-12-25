@@ -17,7 +17,10 @@ public class FacebookResponseConverter {
             List<Account> accounts = new ArrayList<>();
             List<Object> list = (List<Object>) facebookResponse.getData();
             for (Object v : list) {
-                accounts.add(objectMapper.convertValue(v, Account.class));
+                Account account = objectMapper.convertValue(v, Account.class);
+                Long threshold = (Long) find((Map<String, Object>) v, "threshold_amount");
+                account.setThreshold(threshold);
+                accounts.add(account);
             }
             return accounts;
         } catch (ClassCastException | IllegalArgumentException e) {

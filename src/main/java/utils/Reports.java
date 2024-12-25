@@ -28,7 +28,6 @@ public class Reports {
             row.add(account.getAccountId());
             row.add(getWebUrlByAdId((String) elementMap.get("ad_id"), webUrls));
             row.add(account.getTimezoneName());
-            row.add(String.valueOf(account.getThreshold()));
             row.add((String) elementMap.get("date_start"));
             row.add((String) elementMap.get("date_stop"));
             row.add(account.getAccountStatus() != 2 ? String.valueOf(account.getThreshold()) : "");

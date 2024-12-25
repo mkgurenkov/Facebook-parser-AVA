@@ -103,11 +103,20 @@ public class FacebookAccessManager {
 
                 waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
                 driver.findElement(By.xpath("//input")).sendKeys(code);
-                if (!driver.findElements(By.xpath("//*[text()=\"Continue\"]")).isEmpty()) {
-                    driver.findElement(By.xpath("//*[text()=\"Continue\"]")).click();
+                if (!driver.findElements(By.xpath("//*[text()=\"Continue\"]")).isEmpty() || !driver.findElements(By.xpath("//*[text()=\"Продолжить\"]")).isEmpty()) {
+                    if (!driver.findElements(By.xpath("//*[text()=\"Continue\"]")).isEmpty()) {
+                        driver.findElement(By.xpath("//*[text()=\"Continue\"]")).click();
+                    }
+                    if (!driver.findElements(By.xpath("//*[text()=\"Продолжить\"]")).isEmpty()) {
+                        driver.findElement(By.xpath("//*[text()=\"Продолжить\"]")).click();
+                    }
                 }
                 waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
-                driver.findElement(By.xpath("//*[text()=\"Trust this device\"]")).click();
+                if (!driver.findElements(By.xpath("//*[text()=\"Trust this device\"]")).isEmpty()) {
+                    driver.findElement(By.xpath("//*[text()=\"Trust this device\"]")).click();
+                } else {
+                    driver.findElement(By.xpath("//*[text()=\"Сделать это устройство доверенным\"]")).click();
+                }
             }
 
             waitPage.until(webDriver -> jsExecutor.executeScript("return document.readyState").equals("complete"));
